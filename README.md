@@ -11,7 +11,7 @@ O ambiente foi configurado para ser usado com IDEs como PHPStorm ou VSCode, com 
 - `docker/` Arquivos de configuração do Docker
 - `docker/php/` Dockerfile do PHP-FPM + Node.js + Composer + Xdebug
 - `docker/apache/` Dockerfile do Apache e arquivos de configuração
-- `src/` Código-fonte do projeto (mountado nos containers)
+- `src/` Código-fonte do projeto (montado nos containers)
 - `.env` Configurações de ambiente (portas, usuários, senhas)
 ---
 
@@ -97,7 +97,8 @@ docker compose down
 
 ### Dicas
 
-Não é necessário instalar PHP, Composer ou Node localmente.
-Para atualizar dependências do Composer: docker compose exec php composer update
-Para rodar scripts Node/NPM: docker compose exec php npm run <script>
+- Não é necessário instalar PHP, Composer ou Node localmente.
+- Para atualizar dependências do Composer: `docker compose exec php composer update`
+- Para rodar scripts Node/NPM: `docker compose exec php npm run <script>`
+ 
 Feito para simplificar o desenvolvimento em projetos PHP modernos, integrando debug, Composer, Node e banco de dados em containers separados, mas trabalhando de forma integrada com a IDE.
