@@ -2,49 +2,49 @@ services:
   # PHP-FPM
   php:
     build: ./docker/php
-    container_name: my_project_php
+    container_name: ${PROJECT_NAME:-my_project}_php
     volumes:
       - ./src:/var/www/html
     environment:
       PUID: ${PUID:-1000}  # UID do seu usuário no host
       PGID: ${PGID:-1000}
     networks:
-      - my_project_net
+      - net
 
   # Apache
   apache:
     build: ./docker/apache
-    container_name: my_project_apache
+    container_name: ${PROJECT_NAME:-my_project}_apache
     ports:
-      - "${APACHE_PORT:-8080}:80"
+      - ${APACHE_PORT:-8080}:80
     volumes:
       - ./src:/var/www/html
-      - ./docker/apache/myproject.conf:/usr/local/apache2/conf/extra/httpd-vhosts.conf
+      - ./docker/apache/my-project.conf:/usr/local/apache2/conf/extra/httpd-vhosts.conf
     depends_on:
       - php
     networks:
-      - my_project_net
-    command: ["httpd-foreground"]
+      - net
+    command: [httpd-foreground]
 
   # MariaDB
   mysql:
     image: mariadb:11
-    container_name: my_project_mariadb
+    container_name: ${PROJECT_NAME:-my_project}_mariadb
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root_password}
       MYSQL_DATABASE: ${MYSQL_DATABASE:-database_name}
       MYSQL_USER: ${MYSQL_USER:-database_user}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD:-user_password}
     ports:
-      - "${MYSQL_PORT:-3306}:3306"
+      - ${MYSQL_PORT:-3306}:3306
     volumes:
-      - mysql_data:/var/lib/mysqln
+      - mysql_data:/var/lib/mysql
       - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
     networks:
-      - my_project_net
+      - net
 
 networks:
-  my_project_net:
+  net:
     driver: bridge
 
 volumes:

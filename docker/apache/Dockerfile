@@ -9,5 +9,5 @@ RUN sed -i '/#LoadModule proxy_module/s/^#//' /usr/local/apache2/conf/httpd.conf
 RUN sed -i '/#LoadModule proxy_fcgi_module/s/^#//' /usr/local/apache2/conf/httpd.conf
 
 # Virtual Host
-COPY ./myproject.conf /usr/local/apache2/conf/extra/httpd-vhosts.conf
+COPY ./my-project.conf /usr/local/apache2/conf/extra/httpd-vhosts.conf
 RUN echo "Include conf/extra/httpd-vhosts.conf" >> /usr/local/apache2/conf/httpd.conf
