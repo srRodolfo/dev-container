@@ -5,6 +5,5 @@ docker/.env
 src/composer.phar
 src/composer.lock
 src/package-lock.json
-src/composer.phar
 docker/.env
 *.log
