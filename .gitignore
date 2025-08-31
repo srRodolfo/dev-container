@@ -1,6 +1,7 @@
 .idea
 src/vendor/
 src/node_modules/
+docker/.env
 src/composer.phar
 src/composer.lock
 src/package-lock.json
