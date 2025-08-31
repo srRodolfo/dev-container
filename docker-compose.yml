@@ -3,7 +3,7 @@ services:
   php:
     build: ./docker/php
     image: dev-container-php:8.2-fpm
-    container_name: ${PROJECT_NAME:-my_project}_php
+    container_name: ${PROJECT_NAME:-dev_container}_php
     volumes:
       - ./src:/var/www/html
     environment:
@@ -16,7 +16,7 @@ services:
   apache:
     build: ./docker/apache
     image: dev-container-apache:2.4
-    container_name: ${PROJECT_NAME:-my_project}_apache
+    container_name: ${PROJECT_NAME:-dev_container}_apache
     ports:
       - ${APACHE_PORT:-8080}:80
     volumes:
@@ -31,7 +31,7 @@ services:
   # MariaDB
   mysql:
     image: mariadb:11
-    container_name: ${PROJECT_NAME:-my_project}_mariadb
+    container_name: ${PROJECT_NAME:-dev_container}_mariadb
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root_password}
       MYSQL_DATABASE: ${MYSQL_DATABASE:-database_name}
