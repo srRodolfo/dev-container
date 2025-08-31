@@ -2,6 +2,7 @@ services:
   # PHP-FPM
   php:
     build: ./docker/php
+    image: dev-container-php:8.2-fpm
     container_name: ${PROJECT_NAME:-my_project}_php
     volumes:
       - ./src:/var/www/html
@@ -14,6 +15,7 @@ services:
   # Apache
   apache:
     build: ./docker/apache
+    image: dev-container-apache:2.4
     container_name: ${PROJECT_NAME:-my_project}_apache
     ports:
       - ${APACHE_PORT:-8080}:80

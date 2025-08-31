@@ -33,8 +33,7 @@ RUN pecl install xdebug && docker-php-ext-enable xdebug
 RUN echo "xdebug.mode=develop,debug" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
     && echo "xdebug.start_with_request=yes" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
     && echo "xdebug.client_host=host.docker.internal" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
-    && echo "xdebug.client_port=9003" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
-    && echo "xdebug.overload_var_dump=1" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+    && echo "xdebug.client_port=9003" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 
 # Instalar Composer globalmente
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
@@ -46,7 +45,7 @@ RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - \
 
 # Criar diretórios de cache do Composer/NPM com permissões corretas
 RUN mkdir -p /var/www/.composer /var/www/.npm \
-    && chown -R www-data:www-data /var/www
+    && chown -R www-data:www-data /var/www/
 
 # Definir diretório de trabalho
 WORKDIR /var/www/html
