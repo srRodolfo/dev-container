@@ -1,8 +1,9 @@
 .idea
-vendor/
-storage/
-icomoon/
-node_modules/
-composer.lock
+src/vendor/
+src/node_modules/
+src/composer.phar
+src/composer.lock
+src/package-lock.json
+src/composer.phar
 docker/.env
 *.log
