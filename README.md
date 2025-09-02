@@ -1,6 +1,6 @@
 # Projeto Dev-Container - Ambiente de Desenvolvimento Docker
 
-Este repositório contém um **ambiente de desenvolvimento completo** utilizando Docker, pronto para PHP 8.2-FPM, Apache, MariaDB e Node.js.  
+Este repositório contém um **ambiente de desenvolvimento completo** utilizando Docker, pronto para PHP 8.0 a 8.4 (FPM), Apache, MariaDB e Node.js.  
 
 O ambiente foi configurado para ser usado com IDEs como PHPStorm ou VSCode, com **Composer, NPM e Xdebug integrados**.
 
@@ -31,6 +31,8 @@ O ambiente foi configurado para ser usado com IDEs como PHPStorm ou VSCode, com 
 # PHP
 PUID=1000
 PGID=1000
+PHP_PORT=9000
+PHP_VERSION=8.4
 
 # Apache
 APACHE_PORT=8080
