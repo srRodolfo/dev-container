@@ -1,5 +1,5 @@
 # Usa a variável do .env (PHP_VERSION) definida no docker-compose.yml
-ARG PHP_VERSION=8.2
+ARG PHP_VERSION=8.4
 FROM php:${PHP_VERSION}-fpm
 
 # Argumentos para UID/GID
