@@ -115,7 +115,7 @@ docker_php_tools() {
   if [ -n "$container" ]; then
     docker exec "$container" "$tool" "$@"
   else
-    echo "⚠️ Nenhum container PHP em execução. Rodando '$tool' no host."
+    echo "Nenhum container PHP em execução. Rodando '$tool' no host."
     command "$tool" "$@"
   fi
 }
