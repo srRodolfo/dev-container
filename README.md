@@ -100,5 +100,51 @@ docker compose down
 - Não é necessário instalar PHP, Composer ou Node localmente.
 - Para atualizar dependências do Composer: `docker compose exec php composer update`
 - Para rodar scripts Node/NPM: `docker compose exec php npm run <script>`
- 
+
+### Atalhos para o Terminal
+
+Adicione o seguinte ao seu `~/.bashrc` ou `~/.bash_aliases`:
+
+```bash
+# Função única para PHP/Composer/NPM/Node no container
+docker_php_tools() {
+  local tool="$1"   # php, composer, npm ou node
+  shift
+  local container=$(docker ps --format '{{.Names}}' | grep '_php$' | head -n 1)
+
+  if [ -n "$container" ]; then
+    docker exec "$container" "$tool" "$@"
+  else
+    echo "⚠️ Nenhum container PHP em execução. Rodando '$tool' no host."
+    command "$tool" "$@"
+  fi
+}
+
+# Aliases
+alias php='docker_php_tools php'
+alias composer='docker_php_tools composer'
+alias npm='docker_php_tools npm'
+alias node='docker_php_tools node'
+```
+Depois, recarregue o Bash:
+```bash
+source ~/.bashrc
+```
+Como usar:
+```bash
+# Ver versão do PHP
+php -v
+
+# Instalar dependências do Composer
+composer install
+
+# Rodar scripts NPM
+npm run dev
+
+# Ver versão do Node
+node -v
+```
+- O comando detecta automaticamente o container do projeto que utiliza este repositório.
+- Caso o container não esteja rodando, o comando será executado no host.
+
 Feito para simplificar o desenvolvimento em projetos PHP modernos, integrando debug, Composer, Node e banco de dados em containers separados, mas trabalhando de forma integrada com a IDE.
