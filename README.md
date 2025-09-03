@@ -115,7 +115,7 @@ docker_php_tools() {
   local container=$(docker ps --format '{{.Names}}' | grep '_php$' | head -n 1)
 
   if [ -n "$container" ]; then
-    docker exec "$container" "$tool" "$@"
+    docker exec -it "$container" "$tool" "$@"
   else
     echo "Nenhum container PHP em execução. Rodando '$tool' no host."
     command "$tool" "$@"
