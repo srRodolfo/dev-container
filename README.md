@@ -87,13 +87,13 @@ docker compose logs -f
 
 Acessar terminal do container PHP:
 ```bash
-docker compose exec dev_container_php bash
+docker exec -it dev_container_php bash
 ```
 
 Rodar Composer / NPM dentro do container PHP:
 ```bash
-docker compose exec dev_container_php composer install
-docker compose exec dev_container_php npm install
+docker exec dev_container_php composer install
+docker exec dev_container_php npm install
 ```
 
 Parar o ambiente:
