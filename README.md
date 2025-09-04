@@ -11,8 +11,11 @@ O ambiente foi configurado para ser usado com IDEs como PHPStorm ou VSCode, com 
 - `docker/` Arquivos de configuração do Docker
 - `docker/php/` Dockerfile do PHP-FPM + Node.js + Composer + Xdebug
 - `docker/apache/` Dockerfile do Apache e arquivos de configuração
-- `src/public` Código-fonte do projeto (montado nos containers)
-- `.env` Configurações de ambiente (portas, usuários, senhas)
+- `docker/.env` Configurações de ambiente (portas, usuários, senhas)
+- `docker/docker-compose.yml` Orquestração dos serviços (PHP, Apache, MariaDB)
+- `/` Código-fonte do projeto (montado nos containers)
+- `/public` Pasta pública do projeto (raiz do servidor web, acessada pelo navegador)
+
 ---
 
 ### Pré-requisitos
@@ -60,7 +63,7 @@ docker compose up -d --build
 
 - PHP: integrado ao container php
 - Apache: `http://localhost:<APACHE_PORT>`
-- MariaDB: host `mysql:<MYSQL_PORT>`, usuário `<MYSQL_USER>` e senha `<MYSQL_PASSWORD>` no arquivo .env
+- MariaDB: host `mysql:<MYSQL_PORT>`, usuário `<MYSQL_USER>` e senha `<MYSQL_PASSWORD>` no arquivo `.env`
 - Node.js / NPM: dentro do container PHP (node -v, npm -v)
 - Composer: dentro do container PHP (composer install)
 
@@ -75,7 +78,7 @@ Você pode executar comandos diretamente da IDE apontando para o container PHP `
 
 ### Volumes e Persistência
 
-- Código-fonte é montado do host `(src/public)` para `/var/www/html/public` dentro do container
+- Código-fonte é montado na raiz do projeto no host `/` para `/var/www/html` dentro do container
 - Banco de dados MariaDB persiste em volume `db_data` para manter dados entre reinicializações
 
 ### Comandos úteis
@@ -107,19 +110,20 @@ docker compose down
 - Para atualizar dependências do Composer: `docker compose exec dev_container_php composer update`
 - Para rodar scripts Node/NPM: `docker compose exec dev_container_php npm run <script>`
 
-### Intstalar Laravel (opcional)
+### Instalar Laravel (opcional)
 
+Na raiz do projeto execute este comando:
 ```bash
-rm -rf src/public
+rm -rf public
 docker exec dev_container_php composer create-project laravel/laravel . "12.*"
 ```
 
 #### Observações importantes!
 
-O comando `rm -rf src/public` remove a pasta `public/` criada automaticamente no `src/`, para evitar conflitos com o `public/` do Laravel.
+O comando `rm -rf public` remove a pasta `public` criada automaticamente na raiz do projeto `/`, para evitar conflitos com o `public` do Laravel.
 
-O ponto `.` no comando significa que o Laravel será instalado na pasta atual `src/`.
-Após a instalação, o DocumentRoot no Apache aponta para `src/public`.
+O ponto `.` no comando significa que o Laravel será instalado na raiz do projeto `/`.
+Após a instalação, o DocumentRoot no Apache aponta para `public`.
 
 É obrigatório informar a versão do Laravel entre aspas duplas, por exemplo:
 
@@ -146,8 +150,8 @@ docker_php_tools() {
 }
 
 # Aliases
-alias up='docker compose up -d'
-alias down='docker compose down'
+alias up='cd docker && docker compose up -d && cd ..'
+alias down='cd docker && docker compose down && cd ..r'
 alias php='docker_php_tools php'
 alias composer='docker_php_tools composer'
 alias npm='docker_php_tools npm'

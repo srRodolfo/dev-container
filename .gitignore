@@ -1,8 +1,4 @@
 .idea
-src/vendor/
-src/node_modules/
-src/composer.phar
-src/composer.lock
-src/package-lock.json
-.env
+docker/.env
+docker/*.log
 *.log
