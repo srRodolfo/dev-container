@@ -2,13 +2,13 @@ services:
   # PHP-FPM
   php:
     build:
-      context: ./docker/php
+      context: ./php
       args:
         PHP_VERSION: ${PHP_VERSION:-8.2}
     image: dev-container-php:${PHP_VERSION:-8.2}-fpm
     container_name: ${CONTAINER_NAME:-dev_container}_php
     volumes:
-      - ./src:/var/www/html:Z
+      - ..:/var/www/html:Z
     environment:
       PUID: ${PUID:-1000}  # UID do seu usuário no host
       PGID: ${PGID:-1000}
@@ -19,14 +19,14 @@ services:
 
   # Apache
   apache:
-    build: ./docker/apache
+    build: ./apache
     image: dev-container-apache:2.4
     container_name: ${CONTAINER_NAME:-dev_container}_apache
     ports:
       - ${APACHE_PORT:-8080}:80
     volumes:
-      - ./src:/var/www/html:Z
-      - ./docker/apache/my-project.conf:/usr/local/apache2/conf/extra/httpd-vhosts.conf
+      - ..:/var/www/html:Z
+      - ./apache/my-project.conf:/usr/local/apache2/conf/extra/httpd-vhosts.conf
     depends_on:
       - php
     networks:
@@ -46,7 +46,7 @@ services:
       - ${MYSQL_PORT:-3306}:3306
     volumes:
       - mysql_data:/var/lib/mysql:Z
-      - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+      - ./mysql/my.cnf:/etc/mysql/conf.d/my.cnf
     networks:
       - net
 
