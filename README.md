@@ -10,21 +10,23 @@ O ambiente foi configurado para ser usado com IDEs como PHPStorm ou VSCode, com 
 
 - `docker/` Arquivos de configuração do Docker
 - `docker/php/` Dockerfile do PHP-FPM + Node.js + Composer + Xdebug
-- `docker/apache/` Dockerfile do Apache e arquivos de configuração
-- `docker/.env` Configurações de ambiente (portas, usuários, senhas)
-- `docker/docker-compose.yml` Orquestração dos serviços (PHP, Apache, MariaDB)
-- `/` Código-fonte do projeto (montado nos containers)
-- `/public` Pasta pública do projeto (raiz do servidor web, acessada pelo navegador)
+- `docker/apache/` Dockerfile do Apache e arquivo de configuração
+- `docker/mysql/` Arquivo de configuração
+- `.env` Configurações de ambiente (portas, usuários, senhas)
+- `docker-compose.yml` Orquestração dos serviços (PHP, Apache, MariaDB)
+- `src/` Código-fonte do projeto (montado nos containers)
+- `src/public` Pasta pública do projeto (raiz do servidor web, acessada pelo navegador)
 
 ```
 project-root/
- ├─ public/index.php
- └─ docker/
-     ├─ docker-compose.yml
-     ├─ .env
-     ├─ php/
-     ├─ apache/
-     └─ mysql/
+├─ docker/                       
+│   ├─ php/                      
+│   ├─ apache/                   
+│   └─ mysql/        
+├─ docker-compose.yml                          
+├─ .env                          
+└─ src/                          
+    └─ public/   
 ```
 ---
 
@@ -88,7 +90,7 @@ Você pode executar comandos diretamente da IDE apontando para o container PHP `
 
 ### Volumes e Persistência
 
-- Código-fonte é montado na raiz do projeto no host `/` para `/var/www/html` dentro do container
+- Código-fonte é montado no host `/src` para `/var/www/html` dentro do container
 - Banco de dados MariaDB persiste em volume `db_data` para manter dados entre reinicializações
 
 ### Comandos úteis
@@ -124,15 +126,15 @@ docker compose down
 
 Na raiz do projeto execute este comando:
 ```bash
-rm -rf public
+rm -rf src/public
 docker exec dev_container_php composer create-project laravel/laravel . "12.*"
 ```
 
 #### Observações importantes!
 
-O comando `rm -rf public` remove a pasta `public` criada automaticamente na raiz do projeto `/`, para evitar conflitos com o `public` do Laravel.
+O comando `rm -rf src/public` remove a pasta `public` criada automaticamente no diretório `src`, para evitar conflitos com o `public` do Laravel.
 
-O ponto `.` no comando significa que o Laravel será instalado na raiz do projeto `/`.
+O ponto `.` no comando significa que o Laravel será instalado no diretório `/src`.
 Após a instalação, o DocumentRoot no Apache aponta para `public`.
 
 É obrigatório informar a versão do Laravel entre aspas duplas, por exemplo:
