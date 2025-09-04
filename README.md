@@ -16,6 +16,16 @@ O ambiente foi configurado para ser usado com IDEs como PHPStorm ou VSCode, com 
 - `/` Código-fonte do projeto (montado nos containers)
 - `/public` Pasta pública do projeto (raiz do servidor web, acessada pelo navegador)
 
+```
+project-root/
+ ├─ public/index.php
+ └─ docker/
+     ├─ docker-compose.yml
+     ├─ .env
+     ├─ php/
+     ├─ apache/
+     └─ mysql/
+```
 ---
 
 ### Pré-requisitos
