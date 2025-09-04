@@ -160,8 +160,8 @@ docker_php_tools() {
 }
 
 # Aliases
-alias up='cd docker && docker compose up -d && cd ..'
-alias down='cd docker && docker compose down && cd ..r'
+alias up='docker compose up -d'
+alias down='docker compose down'
 alias php='docker_php_tools php'
 alias composer='docker_php_tools composer'
 alias npm='docker_php_tools npm'
