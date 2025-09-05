@@ -71,6 +71,8 @@ docker compose up -d --build
 - O PHP-FPM estará disponível na versão definida em `PHP_VERSION` e na porta definida em `PHP_PORT`.
 - O Apache estará disponível na porta definida em `APACHE_PORT` (ex: http://localhost:8080).
 
+---
+
 ### Acessando o ambiente
 
 - PHP: integrado ao container php
@@ -81,6 +83,8 @@ docker compose up -d --build
 
 Você pode executar comandos diretamente da IDE apontando para o container PHP `<CONTAINER_NAME>_php`.
 
+---
+
 ### Configuração de Xdebug
 
 - Porta configurada: `9003`
@@ -88,10 +92,14 @@ Você pode executar comandos diretamente da IDE apontando para o container PHP `
 - Ativado para debug remoto em IDE
 - Exibição de erros do PHP está habilitada `(display_errors=On, error_reporting=E_ALL)`
 
+---
+
 ### Volumes e Persistência
 
 - Código-fonte é montado no host `/src` para `/var/www/html` dentro do container
 - Banco de dados MariaDB persiste em volume `db_data` para manter dados entre reinicializações
+
+---
 
 ### Comandos úteis
 
@@ -116,11 +124,15 @@ Parar o ambiente:
 docker compose down
 ```
 
+---
+
 ### Dicas
 
 - Não é necessário instalar PHP, Composer ou Node localmente.
 - Para atualizar dependências do Composer: `docker compose exec dev_container_php composer update`
 - Para rodar scripts Node/NPM: `docker compose exec dev_container_php npm run <script>`
+
+---
 
 ### Instalar Laravel (opcional)
 
@@ -141,6 +153,16 @@ Após a instalação, o DocumentRoot no Apache aponta para `public`.
 
 - "12.*" → instala a versão 12
 - "11.*" → instala a versão 11
+
+No `vite.config.js`, adicione:
+
+```js
+server: {
+    host: '0.0.0.0'
+}
+```
+
+---
 
 ### Atalhos para o Terminal (Opcional)
 
