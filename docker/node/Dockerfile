@@ -19,6 +19,11 @@ RUN apt-get update && apt-get install -y \
 RUN mkdir -p /var/www/.npm \
     && chown -R node:node /var/www/.npm
 
+# Dar shell ao usuário node e definir senha para node e root
+RUN usermod -s /bin/bash node \
+    && echo "node:1234" | chpasswd \
+    && echo "root:1234" | chpasswd
+
 # Definir diretório de trabalho
 WORKDIR /var/www/html
 

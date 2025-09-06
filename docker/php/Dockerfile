@@ -40,15 +40,14 @@ RUN echo "xdebug.mode=develop,debug,coverage" >> /usr/local/etc/php/conf.d/docke
 # Instalar Composer globalmente
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# Instalar Node.js (LTS) e NPM
-# RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - \
-#    && apt-get install -y nodejs \
-#    && apt-get clean && rm -rf /var/lib/apt/lists/*
-
-# Criar diretórios de cache do Composer/NPM com permissões corretas
-# RUN mkdir -p /var/www/.composer /var/www/.npm \
+# Criar diretórios de cache do Composer com permissões corretas
 RUN mkdir -p /var/www/.composer \
     && chown -R www-data:www-data /var/www/
+
+# Dar shell ao usuário www-data e definir senha para www-data e root
+RUN usermod -s /bin/bash www-data \
+    && echo "www-data:1234" | chpasswd \
+    && echo "root:1234" | chpasswd
 
 # Definir diretório de trabalho
 WORKDIR /var/www/html
