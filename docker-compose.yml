@@ -4,19 +4,36 @@ services:
     build:
       context: ./docker/php
       args:
-        PHP_VERSION: ${PHP_VERSION:-8.2}
-    image: dev-container-php:${PHP_VERSION:-8.2}-fpm
+        PUID: ${PUID:-1000}
+        PGID: ${PGID:-1000}
+        PHP_VERSION: ${PHP_VERSION:-8.4}
+    image: dev-container-php:${PHP_VERSION:-8.4}-fpm
     container_name: ${CONTAINER_NAME:-dev_container}_php
     volumes:
       - ./src:/var/www/html:Z
-    environment:
-      PUID: ${PUID:-1000}  # UID do seu usuário no host
-      PGID: ${PGID:-1000}
+
     ports:
       - ${PHP_PORT:-9000}:9000
-      - "5173:5173" # Laravel vite
     networks:
-      - net
+      - dev_container_network
+
+  # Node
+  node:
+    build:
+      context: ./docker/node
+      args:
+        PUID: ${PUID:-1000}
+        PGID: ${PGID:-1000}
+        NODE_VERSION: ${NODE_VERSION:-22}
+    image: dev-container-node:${NODE_VERSION:-22}
+    container_name: ${CONTAINER_NAME:-dev_container}_node
+    volumes:
+      - ./src:/var/www/html:Z
+    ports:
+      - ${NODE_PORT:-3000}:3000
+      - ${VITE_PORT:-5173}:5173
+    networks:
+      - dev_container_network
 
   # Apache
   apache:
@@ -31,7 +48,7 @@ services:
     depends_on:
       - php
     networks:
-      - net
+      - dev_container_network
     command: [httpd-foreground]
 
   # MariaDB
@@ -49,10 +66,10 @@ services:
       - mysql_data:/var/lib/mysql:Z
       - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
     networks:
-      - net
+      - dev_container_network
 
 networks:
-  net:
+  dev_container_network:
     driver: bridge
 
 volumes:
