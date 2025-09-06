@@ -79,7 +79,8 @@ docker compose up -d --build
 - O PHP-FPM estará disponível na versão definida em `PHP_VERSION` e na porta definida em `PHP_PORT`.
 - O NODE estará disponível na versão definida em `NODE_VERSION` e na porta definida em `NODE_PORT`.
 - O Apache estará disponível na porta definida em `APACHE_PORT` (ex: http://localhost:8080).
-- O Maria estará disponível na porta definida em `MYSQL_PORT`.
+- O MariaDB estará disponível na porta definida em `MYSQL_PORT`.
+- Senha root dos containers PHP e Node é 1234.
 
 ---
 
