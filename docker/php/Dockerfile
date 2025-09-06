@@ -41,12 +41,13 @@ RUN echo "xdebug.mode=develop,debug" >> /usr/local/etc/php/conf.d/docker-php-ext
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # Instalar Node.js (LTS) e NPM
-RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - \
-    && apt-get install -y nodejs \
-    && apt-get clean && rm -rf /var/lib/apt/lists/*
+# RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - \
+#    && apt-get install -y nodejs \
+#    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Criar diretórios de cache do Composer/NPM com permissões corretas
-RUN mkdir -p /var/www/.composer /var/www/.npm \
+# RUN mkdir -p /var/www/.composer /var/www/.npm \
+RUN mkdir -p /var/www/.composer \
     && chown -R www-data:www-data /var/www/
 
 # Definir diretório de trabalho
@@ -57,7 +58,7 @@ USER www-data
 
 # Evitar que composer/npm use root
 ENV COMPOSER_HOME=/var/www/.composer
-ENV NPM_CONFIG_PREFIX=/var/www/.npm
+# ENV NPM_CONFIG_PREFIX=/var/www/.npm
 
 # Entrypoint
 CMD ["php-fpm"]
