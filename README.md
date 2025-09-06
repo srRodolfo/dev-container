@@ -259,6 +259,7 @@ alias down='docker compose down'
 alias php='docker_php_tools php'
 alias composer='docker_php_tools composer'
 alias npm='docker_node_tools npm'
+alias npx='docker_node_tools npx'
 alias node='docker_node_tools node'
 ```
 3. Depois, recarregue o Bash:
