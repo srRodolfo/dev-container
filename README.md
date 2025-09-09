@@ -9,7 +9,7 @@ O ambiente foi configurado para ser usado com IDEs como PHPStorm ou VSCode, com 
 ### Estrutura do Projeto
 
 - `docker/` Arquivos de configuração do Docker
-- `docker/php/` Dockerfile do PHP-FPM + Node.js + Composer + Xdebug
+- `docker/php/` Dockerfile do PHP-FPM + Composer + Xdebug
 - `docker/apache/` Dockerfile do Apache e arquivo de configuração
 - `docker/node/` Dockerfile do Node
 - `docker/mysql/` Arquivo de configuração
