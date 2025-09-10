@@ -55,9 +55,8 @@ WORKDIR /var/www/html
 # Mudar para usuário www-data
 USER www-data
 
-# Evitar que composer/npm use root
+# Evitar que composer use root
 ENV COMPOSER_HOME=/var/www/.composer
-# ENV NPM_CONFIG_PREFIX=/var/www/.npm
 
 # Entrypoint
 CMD ["php-fpm"]
