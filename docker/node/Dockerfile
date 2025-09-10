@@ -27,7 +27,7 @@ RUN usermod -s /bin/bash node \
 # Definir diretório de trabalho
 WORKDIR /var/www/html
 
-# Mudar para usuário www-data
+# Mudar para usuário node
 USER node
 
 # Evitar que npm use root
