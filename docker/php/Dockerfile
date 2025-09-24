@@ -21,7 +21,8 @@ RUN apt-get update && apt-get install -y \
 RUN docker-php-ext-configure gd --with-jpeg --with-freetype
 
 # Instalar extensões PHP
-RUN docker-php-ext-install gd exif pdo pdo_mysql mbstring xml zip sockets
+RUN docker-php-ext-install gd exif pdo pdo_mysql mbstring xml zip sockets opcache
+COPY ./opcache.ini /usr/local/etc/php/conf.d/opcache.ini
 
 # Ativar exibição de todos os erros (dev)
 RUN echo "display_errors=On" >> /usr/local/etc/php/conf.d/99-errors.ini \
