@@ -15,7 +15,7 @@ services:
     ports:
       - ${PHP_PORT:-9000}:9000
     networks:
-      - dev_container_network
+      - net
 
   # Node
   node:
@@ -33,43 +33,43 @@ services:
       - ${NODE_PORT:-3000}:3000
       - ${VITE_PORT:-5173}:5173
     networks:
-      - dev_container_network
+      - net
 
   # Apache
   apache:
-    build: ./docker/apache
+    build:
+      context: ./docker/apache
+      args:
+        PUID: ${PUID:-1000}
+        PGID: ${PGID:-1000}
     image: dev-container-apache:2.4
     container_name: ${CONTAINER_NAME:-dev_container}_apache
     ports:
-      - ${APACHE_PORT:-8080}:80
+      - ${APACHE_PORT:-8000}:80
     volumes:
       - ./src:/var/www/html:Z
-      - ./docker/apache/my-project.conf:/usr/local/apache2/conf/extra/httpd-vhosts.conf
+      - ./docker/apache/vhosts:/usr/local/apache2/conf/vhosts:ro
     depends_on:
       - php
     networks:
-      - dev_container_network
-    command: [httpd-foreground]
+      - net
 
   # MariaDB
-  mysql:
+  mariadb:
     image: mariadb:11
     container_name: ${CONTAINER_NAME:-dev_container}_mariadb
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root_password}
-      MYSQL_DATABASE: ${MYSQL_DATABASE:-database_name}
-      MYSQL_USER: ${MYSQL_USER:-database_user}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-user_password}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-password}
     ports:
       - ${MYSQL_PORT:-3306}:3306
     volumes:
       - mysql_data:/var/lib/mysql:Z
       - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
     networks:
-      - dev_container_network
+      - net
 
 networks:
-  dev_container_network:
+  net:
     driver: bridge
 
 volumes:

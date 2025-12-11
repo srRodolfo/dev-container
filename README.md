@@ -16,7 +16,8 @@ O ambiente foi configurado para ser usado com IDEs como PHPStorm ou VSCode, com 
 - `.env` Configurações de ambiente (portas, usuários, senhas)
 - `docker-compose.yml` Orquestração dos serviços (PHP, Apache, MariaDB)
 - `src/` Código-fonte do projeto (montado nos containers)
-- `src/public` Pasta pública do projeto (raiz do servidor web, acessada pelo navegador)
+- `src/my-project` Pasta do projeto
+- `src/my-project/public` Pasta pública do projeto (raiz do servidor web, acessada pelo navegador)
 
 ```
 project-root/
@@ -28,7 +29,8 @@ project-root/
 ├─ docker-compose.yml                          
 ├─ .env                          
 └─ src/                          
-    └─ public/   
+    └─ my-project/
+        └─ public/    
 ```
 ---
 
@@ -61,13 +63,10 @@ NODE_PORT=3000
 VITE_PORT=5173
 
 # Apache
-APACHE_PORT=8080
+APACHE_PORT=8000
 
 # MariaDB
-MYSQL_ROOT_PASSWORD=root_password
-MYSQL_DATABASE=database_name
-MYSQL_USER=database_user
-MYSQL_PASSWORD=user_password
+MYSQL_ROOT_PASSWORD=password
 MYSQL_PORT=3306
 ```
 2. Subir o ambiente com Docker Compose:
@@ -88,7 +87,7 @@ docker compose up -d --build
 
 - PHP: integrado ao container php
 - Apache: `http://localhost:<APACHE_PORT>`
-- MariaDB: host `mysql:<MYSQL_PORT>`, usuário `<MYSQL_USER>` e senha `<MYSQL_PASSWORD>` no arquivo `.env`
+- MariaDB: host `mysql:<MYSQL_PORT>`, usuário `root` e senha `<MYSQL_ROOT_PASSWORD>` no arquivo `.env`
 - Node.js / NPM: dentro do container Node (node -v, npm -v)
 - Composer: dentro do container PHP (composer install)
 
