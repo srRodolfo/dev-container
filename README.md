@@ -10,7 +10,7 @@ O ambiente foi configurado para ser usado com IDEs como PHPStorm ou VSCode, com 
 
 - `docker/` Arquivos de configuração do Docker
 - `docker/php/` Dockerfile do PHP-FPM + Composer + Xdebug
-- `docker/apache/` Dockerfile do Apache e arquivo de configuração
+- `docker/apache/` Dockerfile do Apache e arquivo de configuração por projeto (vhosts)
 - `docker/node/` Dockerfile do Node
 - `docker/mysql/` Arquivo de configuração
 - `.env` Configurações de ambiente (portas, usuários, senhas)

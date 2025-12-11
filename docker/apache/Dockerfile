@@ -15,6 +15,8 @@ RUN sed -i '/#LoadModule rewrite_module/s/^#//' /usr/local/apache2/conf/httpd.co
 RUN sed -i '/#LoadModule proxy_module/s/^#//' /usr/local/apache2/conf/httpd.conf
 RUN sed -i '/#LoadModule proxy_fcgi_module/s/^#//' /usr/local/apache2/conf/httpd.conf
 
+RUN echo "ServerName localhost" >> /usr/local/apache2/conf/httpd.conf
+
 RUN mkdir -p /usr/local/apache2/conf/vhosts
 
 RUN sed -i '/Include conf\/extra\/httpd-vhosts.conf/d' /usr/local/apache2/conf/httpd.conf

@@ -70,6 +70,7 @@ services:
 
 networks:
   net:
+    name: ${CONTAINER_NAME:-dev_container}_net
     driver: bridge
 
 volumes:
