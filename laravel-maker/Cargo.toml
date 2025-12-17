@@ -1,0 +1,11 @@
+[package]
+name = "laravel-maker"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+dotenv = "0.15"
+
+[[bin]]
+name = "lara"
+path = "src/main.rs"

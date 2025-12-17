@@ -45,7 +45,7 @@ services:
     image: dev-container-apache:2.4
     container_name: ${CONTAINER_NAME:-dev_container}_apache
     ports:
-      - ${APACHE_PORT:-8000}:80
+      - ${SERVER_PORT:-8000}:80
     volumes:
       - ./src:/var/www/html:Z
       - ./docker/apache/vhosts:/usr/local/apache2/conf/vhosts:ro
@@ -59,9 +59,9 @@ services:
     image: mariadb:11
     container_name: ${CONTAINER_NAME:-dev_container}_mariadb
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-password}
+      MYSQL_ROOT_PASSWORD: ${DBL_ROOT_PASSWORD:-password}
     ports:
-      - ${MYSQL_PORT:-3306}:3306
+      - ${DB_PORT:-3306}:3306
     volumes:
       - mysql_data:/var/lib/mysql:Z
       - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf

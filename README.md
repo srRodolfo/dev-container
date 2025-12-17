@@ -10,7 +10,8 @@ O ambiente foi configurado para ser usado com IDEs como PHPStorm ou VSCode, com 
 
 - `docker/` Arquivos de configuração do Docker
 - `docker/php/` Dockerfile do PHP-FPM + Composer + Xdebug
-- `docker/apache/` Dockerfile do Apache e arquivo de configuração por projeto (vhosts)
+- `docker/apache/` Dockerfile do Apache
+- `docker/apache/vhosts` Arquivo de configuração por projeto
 - `docker/node/` Dockerfile do Node
 - `docker/mysql/` Arquivo de configuração
 - `.env` Configurações de ambiente (portas, usuários, senhas)
@@ -25,6 +26,8 @@ project-root/
 │   ├─ php/                      
 │   ├─ node/                      
 │   ├─ apache/                   
+│   ├─ apache/                   
+│   │    └─ vhosts/               
 │   └─ mysql/        
 ├─ docker-compose.yml                          
 ├─ .env                          
@@ -155,63 +158,47 @@ docker compose down
 
 ### Instalar Laravel (opcional)
 
-1. Este comando para parar os containers:
+
+1. Instalar Laravel
 ```bash
-docker compose down
+docker exec -it dev_container_php composer create-project laravel/laravel ./example-app "12.0"
 ```
-2. Remove o diretório `src` completamente
-```bash
-rm -rf src
-```
-3. Recria o diretório `src` vazio
-```bash
-mkdir -p src
-```
-4. Subir os containers
-```bash
-docker compose up -d
-```
-5. Instalar Laravel
-```bash
-docker exec -it dev_container_php composer create-project laravel/laravel . "12.0"
-```
-O ponto `.` no comando significa que o Laravel será instalado no diretório `/src`.
-Após a instalação, o DocumentRoot no Apache aponta para `public`.
+O trecho `./example-app` no comando significa que o Laravel será instalado no diretório `/src/example-app`.
 
 É obrigatório informar a versão do Laravel entre aspas duplas, por exemplo:
 
 - "12.*" → instala a versão 12
 - "11.*" → instala a versão 11
 
-6. Executar o composer
+2. Executar o composer
 ```bash
 docker exec -it dev_container_php composer install
 ```
-7. Executar o node
+3. Executar o node
 ```bash
 docker exec -it dev_container_node npm install
 ```
 
-8. No `src/vite.config.js`, adicione:
+4. No `src/vite.config.js`, adicione:
 
 ```js
 server: {
     host: '0.0.0.0'
 }
 ```
-9. No arquivo `src/.env` ajuste as configurações do banco confome as do arquivo `.env` na raiz do projeto. 
+5. No arquivo `src/.env` ajuste as configurações do banco confome as do arquivo `.env` na raiz do projeto. 
 
 
-10. No arquivo `src/.env` ajuste a `<APP_URL>` para `http:\\localhost:8080` a mesma porta setada em `<APACHE_PORT>` no 
-arquivo `.env` da raiz do projeto
+6. No arquivo `src/.env` ajuste a `<APP_URL>` para `http:\\localhost:8000` a mesma porta setada em `<APACHE_PORT>` no 
+arquivo `.env` da raiz do servidor
 
 
-11. Atualize as configurações do Laravel
+7. Atualize as configurações do Laravel
 ```bash
 docker exec -it dev_container_php php artisan config:clear
 ```
 
-12. Execute as migrations
+8. Execute as migrations
 ```bash
 docker exec -it dev_container_php php artisan migrate
 ```
