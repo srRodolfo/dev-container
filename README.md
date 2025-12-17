@@ -1,6 +1,6 @@
 # Projeto Dev-Container - Ambiente de Desenvolvimento Docker
 
-Este repositório contém um **ambiente de desenvolvimento completo** utilizando Docker, pronto para PHP 8.0 até o 8.4 (FPM), Apache, MariaDB e Node.js.  
+Este repositório contém um **ambiente de desenvolvimento completo** utilizando Docker, pronto para PHP 8.0 até o 8.5 (FPM), Apache, MariaDB e Node.js.  
 
 O ambiente foi configurado para ser usado com IDEs como PHPStorm ou VSCode, com **Composer, NPM e Xdebug integrados**.
 
@@ -14,6 +14,8 @@ O ambiente foi configurado para ser usado com IDEs como PHPStorm ou VSCode, com 
 - `docker/apache/vhosts` Arquivo de configuração por projeto
 - `docker/node/` Dockerfile do Node
 - `docker/mysql/` Arquivo de configuração
+- `laravel-maker/` Arquivos do instalador do Laravel
+- `lara` Instalador do Laravel
 - `.env` Configurações de ambiente (portas, usuários, senhas)
 - `docker-compose.yml` Orquestração dos serviços (PHP, Apache, MariaDB)
 - `src/` Código-fonte do projeto (montado nos containers)
@@ -29,6 +31,8 @@ project-root/
 │   ├─ apache/                   
 │   │    └─ vhosts/               
 │   └─ mysql/        
+├─ laravel-maker/    
+├─ lara    
 ├─ docker-compose.yml                          
 ├─ .env                          
 └─ src/                          
@@ -66,11 +70,11 @@ NODE_PORT=3000
 VITE_PORT=5173
 
 # Apache
-APACHE_PORT=8000
+SERVER_PORT=8000
 
 # MariaDB
-MYSQL_ROOT_PASSWORD=password
-MYSQL_PORT=3306
+DB_ROOT_PASSWORD=password
+DB_PORT=3306
 ```
 2. Subir o ambiente com Docker Compose:
 
@@ -80,8 +84,8 @@ docker compose up -d --build
 - `--build` garante que as imagens sejam construídas caso haja alterações no Dockerfile.
 - O PHP-FPM estará disponível na versão definida em `PHP_VERSION` e na porta definida em `PHP_PORT`.
 - O NODE estará disponível na versão definida em `NODE_VERSION` e na porta definida em `NODE_PORT`.
-- O Apache estará disponível na porta definida em `APACHE_PORT` (ex: http://localhost:8080).
-- O MariaDB estará disponível na porta definida em `MYSQL_PORT`.
+- O Apache estará disponível na porta definida em `SERVER_PORT` (ex: http://localhost:8000).
+- O MariaDB estará disponível na porta definida em `DB_PORT`.
 - Senha root dos containers PHP e Node é 1234.
 
 ---
@@ -89,8 +93,8 @@ docker compose up -d --build
 ### Acessando o ambiente
 
 - PHP: integrado ao container php
-- Apache: `http://localhost:<APACHE_PORT>`
-- MariaDB: host `mysql:<MYSQL_PORT>`, usuário `root` e senha `<MYSQL_ROOT_PASSWORD>` no arquivo `.env`
+- Apache: `http://localhost:<SERVER_PORT>`
+- MariaDB: host `mysql:<DB_PORT>`, usuário `root` e senha `<DB_ROOT_PASSWORD>` no arquivo `.env`
 - Node.js / NPM: dentro do container Node (node -v, npm -v)
 - Composer: dentro do container PHP (composer install)
 
@@ -184,9 +188,10 @@ docker_php_tools() {
   local tool="$1"
   shift
   local container=$(docker ps --format '{{.Names}}' | grep '_php$' | head -n 1)
+  local folder_name=$(basename "$PWD")
 
   if [ -n "$container" ]; then
-    docker exec -it "$container" "$tool" "$@"
+    docker exec -it -w "/var/www/html/$folder_name" "$container" "$tool" "$@"
   else
     echo "Nenhum container PHP em execução. Rodando '$tool' no host."
     command "$tool" "$@"
@@ -198,9 +203,10 @@ docker_node_tools() {
   local tool="$1"
   shift
   local container=$(docker ps --format '{{.Names}}' | grep '_node$' | head -n 1)
+  local folder_name=$(basename "$PWD")
 
   if [ -n "$container" ]; then
-    docker exec -it "$container" "$tool" "$@"
+    docker exec -it -w "/var/www/html/$folder_name" "$container" "$tool" "$@"
   else
     echo "Nenhum container Node em execução. Rodando '$tool' no host."
     command "$tool" "$@"
