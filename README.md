@@ -159,51 +159,17 @@ docker compose down
 ### Instalar Laravel (opcional)
 
 
-1. Instalar Laravel
+1. Dar permissão para o programa instalador
 ```bash
-docker exec -it dev_container_php composer create-project laravel/laravel ./example-app "12.0"
+chmod +X lara
 ```
-O trecho `./example-app` no comando significa que o Laravel será instalado no diretório `/src/example-app`.
+Ao rodar `chmod +x` você está dizendo ao sistema: "Este arquivo agora tem permissão para ser rodado como um programa"
 
-É obrigatório informar a versão do Laravel entre aspas duplas, por exemplo:
-
-- "12.*" → instala a versão 12
-- "11.*" → instala a versão 11
-
-2. Executar o composer
+2. Executar o programa instalador
 ```bash
-docker exec -it dev_container_php composer install
+./lara
 ```
-3. Executar o node
-```bash
-docker exec -it dev_container_node npm install
-```
-
-4. No `src/vite.config.js`, adicione:
-
-```js
-server: {
-    host: '0.0.0.0'
-}
-```
-5. No arquivo `src/.env` ajuste as configurações do banco confome as do arquivo `.env` na raiz do projeto. 
-
-
-6. No arquivo `src/.env` ajuste a `<APP_URL>` para `http:\\localhost:8000` a mesma porta setada em `<APACHE_PORT>` no 
-arquivo `.env` da raiz do servidor
-
-
-7. Atualize as configurações do Laravel
-```bash
-docker exec -it dev_container_php php artisan config:clear
-```
-
-8. Execute as migrations
-```bash
-docker exec -it dev_container_php php artisan migrate
-```
-
----
+O comando diz ao sistema: "Execute o arquivo chamado `lara` que está exatamente aqui nesta pasta".
 
 ### Atalhos para o Terminal Bash (Opcional)
 
