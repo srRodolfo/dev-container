@@ -239,6 +239,7 @@ npm run dev
 # Ver versão do Node
 node -v
 ```
+- O comando só funciona na pasta do projeto.
 - O comando detecta automaticamente o container do projeto que utiliza este repositório.
 - Caso o container não esteja rodando, o comando será executado no host.
 
