@@ -100,6 +100,59 @@ docker compose up -d --build
 
 Você pode executar comandos diretamente da IDE apontando para o container PHP `<CONTAINER_NAME>_php` e Node `<CONTAINER_NAME>_node`.
 
+### Configuração de Virtual Hosts (Apache)
+
+Para rodar múltiplos projetos ou usar domínios personalizados (ex: meu-app.test), siga estes passos:
+
+1. Criar o arquivo de configuração
+   
+Dentro de docker/apache/vhosts/, crie um arquivo chamado project.test.conf (substitua o o termo `project` pelo nome do seu projeto):
+```Apache
+<VirtualHost *:80>
+    ServerName project.test
+    DocumentRoot "/var/www/html/project/public"
+
+     <Directory "/var/www/html/project/public">
+        AllowOverride All
+        Require all granted
+        DirectoryIndex index.php index.html
+    </Directory>
+
+    # Encaminhar PHP para PHP-FPM
+    <FilesMatch \.php$>
+        SetHandler "proxy:fcgi://php:9000"
+    </FilesMatch>
+</VirtualHost>
+```
+
+2. Mapear o domínio no seu Sistema Operacional
+   
+  Para que o navegador entenda o endereço project.test, edite o arquivo hosts da sua máquina:
+
+  Linux / macOS: `sudo nano /etc/hosts`
+
+  Windows (Admin): `C:\Windows\System32\drivers\etc\hosts`
+
+Adicione a seguinte linha ao final do arquivo:
+``` Plaintext
+127.0.0.1 project.test
+```
+
+3. Reiniciar o serviço
+
+Sempre que adicionar ou alterar um arquivo em vhosts/, reinicie o container do Apache:
+```Bash
+docker compose restart apache
+```
+
+O projeto estará disponível em `http://project.test:<SERVER_PORT>.`
+
+Pontos de Atenção:
+
+- Caminho Interno: O DocumentRoot deve sempre começar com `/var/www/html/`, que é onde a pasta `src/` do seu host está montada dentro do container.
+
+- Pasta Public: Para Laravel ou projetos modernos, não esqueça de apontar para a subpasta `/public` no DocumentRoot.
+
 ---
 
 ### Configuração de Xdebug
@@ -159,6 +212,7 @@ docker compose down
 - Para rodar scripts Node/NPM: `docker compose exec dev_container_node npm run <script>`
 
 ---
+
 
 ### Instalar Laravel (opcional)
 
