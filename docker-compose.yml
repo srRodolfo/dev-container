@@ -10,7 +10,7 @@ services:
     image: dev-container-php:${PHP_VERSION:-8.4}-fpm
     container_name: ${CONTAINER_NAME:-dev_container}_php
     volumes:
-      - ./src:/var/www/html:Z
+      - ./src:/var/www/html:z
 
     ports:
       - ${PHP_PORT:-9000}:9000
@@ -28,7 +28,7 @@ services:
     image: dev-container-node:${NODE_VERSION:-22}
     container_name: ${CONTAINER_NAME:-dev_container}_node
     volumes:
-      - ./src:/var/www/html:Z
+      - ./src:/var/www/html:z
     ports:
       - ${NODE_PORT:-3000}:3000
       - ${VITE_PORT:-5173}:5173
@@ -47,8 +47,8 @@ services:
     ports:
       - ${SERVER_PORT:-8000}:80
     volumes:
-      - ./src:/var/www/html:Z
-      - ./docker/apache/vhosts:/usr/local/apache2/conf/vhosts:ro
+      - ./src:/var/www/html:z
+      - ./docker/apache/vhosts:/usr/local/apache2/conf/vhosts:ro,z
     depends_on:
       - php
     networks:
@@ -63,7 +63,7 @@ services:
     ports:
       - ${DB_PORT:-3306}:3306
     volumes:
-      - mysql_data:/var/lib/mysql:Z
+      - mysql_data:/var/lib/mysql:z
       - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
     networks:
       - net
