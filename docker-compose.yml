@@ -9,9 +9,9 @@ services:
         PHP_VERSION: ${PHP_VERSION:-8.4}
     image: dev-container-php:${PHP_VERSION:-8.4}-fpm
     container_name: ${CONTAINER_NAME:-dev_container}_php
+    userns_mode: keep-id
     volumes:
-      - ./src:/var/www/html:z
-
+      - ./src:/var/www/html
     ports:
       - ${PHP_PORT:-9000}:9000
     networks:
@@ -27,8 +27,9 @@ services:
         NODE_VERSION: ${NODE_VERSION:-22}
     image: dev-container-node:${NODE_VERSION:-22}
     container_name: ${CONTAINER_NAME:-dev_container}_node
+    userns_mode: keep-id
     volumes:
-      - ./src:/var/www/html:z
+      - ./src:/var/www/html
     ports:
       - ${NODE_PORT:-3000}:3000
       - ${VITE_PORT:-5173}:5173
@@ -64,7 +65,7 @@ services:
       - ${DB_PORT:-3306}:3306
     volumes:
       - mysql_data:/var/lib/mysql:z
-      - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+      - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf:ro,z
     networks:
       - net
 
