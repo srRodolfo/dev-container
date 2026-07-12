@@ -17,7 +17,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     unzip git curl \
     && apt-get clean && rm -rf /var/lib/apt/lists/* \
     && docker-php-ext-configure gd --with-jpeg --with-freetype \
-    && docker-php-ext-install gd exif pdo pdo_mysql mbstring xml zip sockets opcache \
+    && docker-php-ext-install gd exif pdo pdo_mysql mbstring xml zip sockets \
     && pecl install xdebug && docker-php-ext-enable xdebug
 
 # 3. Arquivos de Configuração (Copiar arquivos antes de outras alterações)
