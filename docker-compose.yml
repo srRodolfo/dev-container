@@ -6,8 +6,8 @@ services:
       args:
         PUID: ${PUID:-1000}
         PGID: ${PGID:-1000}
-        PHP_VERSION: ${PHP_VERSION:-8.4}
-    image: dev-container-php:${PHP_VERSION:-8.4}-fpm
+        PHP_VERSION: ${PHP_VERSION:-8.5}
+    image: dev-container-php:${PHP_VERSION:-8.5}-fpm
     container_name: ${CONTAINER_NAME:-dev_container}_php
     userns_mode: keep-id
     volumes:
@@ -24,8 +24,8 @@ services:
       args:
         PUID: ${PUID:-1000}
         PGID: ${PGID:-1000}
-        NODE_VERSION: ${NODE_VERSION:-22}
-    image: dev-container-node:${NODE_VERSION:-22}
+        NODE_VERSION: ${NODE_VERSION:-24}
+    image: dev-container-node:${NODE_VERSION:-24}
     container_name: ${CONTAINER_NAME:-dev_container}_node
     userns_mode: keep-id
     volumes:
