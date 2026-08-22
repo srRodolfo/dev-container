@@ -50,7 +50,7 @@ const DEFAULT_CONTAINER_NAME: &str = "dev_container";
 const DEFAULT_SERVER_PORT: u16 = 8000;
 const DEFAULT_DB_PORT: u16 = 3306;
 const DEFAULT_DB_ROOT_PASSWORD: &str = "password";
-const VHOSTS_DIR: &str = "docker/apache/vhosts";
+const VHOSTS_DIR: &str = "services/apache/vhosts";
 const DEFAULT_LARAVEL_VERSION: u8 = 12;
 const MINIMAL_LARAVEL_VERSION: u8 = 10;
 
@@ -417,12 +417,12 @@ fn format_to_kebab_case(input: &str) -> String {
 }
 
 fn find_project_root() -> Option<PathBuf> {
-    let path_dot = PathBuf::from("./docker");
+    let path_dot = PathBuf::from("./services");
     if path_dot.exists() && path_dot.is_dir() {
         return Some(PathBuf::from("."));
     }
 
-    let path_dot_dot = PathBuf::from("../docker");
+    let path_dot_dot = PathBuf::from("../services");
     if path_dot_dot.exists() && path_dot_dot.is_dir() {
         return Some(PathBuf::from(".."));
     }
