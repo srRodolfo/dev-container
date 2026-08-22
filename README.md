@@ -8,12 +8,12 @@ O ambiente foi configurado para ser usado com IDEs como PHPStorm ou VSCode, com 
 
 ### Estrutura do Projeto
 
-- `docker/` Arquivos de configuração do Docker
-- `docker/php/` Dockerfile do PHP-FPM + Composer + Xdebug
-- `docker/apache/` Dockerfile do Apache
-- `docker/apache/vhosts` Arquivo de configuração por projeto
-- `docker/node/` Dockerfile do Node
-- `docker/mysql/` Arquivo de configuração
+- `services/` Arquivos de configuração do Docker
+- `services/php/` Dockerfile do PHP-FPM + Composer + Xdebug
+- `services/apache/` Dockerfile do Apache
+- `services/apache/vhosts` Arquivo de configuração por projeto
+- `services/node/` Dockerfile do Node
+- `services/mysql/` Arquivo de configuração
 - `laravel-maker/` Arquivos do instalador do Laravel
 - `lara` Instalador do Laravel
 - `.env` Configurações de ambiente (portas, usuários, senhas)
@@ -24,7 +24,7 @@ O ambiente foi configurado para ser usado com IDEs como PHPStorm ou VSCode, com 
 
 ```
 project-root/
-├─ docker/                       
+├─ services/                       
 │   ├─ php/                      
 │   ├─ node/                      
 │   ├─ apache/                   
@@ -106,7 +106,7 @@ Para rodar múltiplos projetos ou usar domínios personalizados (ex: meu-app.tes
 
 1. Criar o arquivo de configuração
    
-Dentro de docker/apache/vhosts/, crie um arquivo chamado project.test.conf (substitua o o termo `project` pelo nome do seu projeto):
+Dentro de services/apache/vhosts/, crie um arquivo chamado project.test.conf (substitua o o termo `project` pelo nome do seu projeto):
 ```Apache
 <VirtualHost *:80>
     ServerName project.test
