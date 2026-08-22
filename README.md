@@ -8,7 +8,7 @@ O ambiente foi configurado para ser usado com IDEs como PHPStorm ou VSCode, com 
 
 ### Estrutura do Projeto
 
-- `services/` Arquivos de configuração do Docker
+- `services/` Arquivos de configuração do ambiente
 - `services/php/` Dockerfile do PHP-FPM + Composer + Xdebug
 - `services/apache/` Dockerfile do Apache
 - `services/apache/vhosts` Arquivo de configuração por projeto
