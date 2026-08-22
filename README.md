@@ -16,7 +16,7 @@ O ambiente foi configurado para ser usado com IDEs como PHPStorm ou VSCode, com 
 - `services/mysql/` Arquivo de configuração
 - `laravel-maker/` Arquivos do instalador do Laravel
 - `lara` Instalador do Laravel
-- `.env` Configurações de ambiente (portas, usuários, senhas)
+- `.env` Variáveis de ambiente (portas, usuários, senhas)
 - `docker-compose.yml` Orquestração dos serviços (PHP, Apache, MariaDB)
 - `src/` Código-fonte do projeto (montado nos containers)
 - `src/my-project` Pasta do projeto
