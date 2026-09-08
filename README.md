@@ -242,10 +242,10 @@ docker_php_tools() {
   local tool="$1"
   shift
   local container=$(docker ps --format '{{.Names}}' | grep '_php$' | head -n 1)
-  local folder_name=$(basename "$PWD")
+  local rel_path="${PWD#*/var/www/html}"
 
   if [ -n "$container" ]; then
-    docker exec -it -w "/var/www/html/$folder_name" "$container" "$tool" "$@"
+    docker exec -it -w "/var/www/html${rel_path}" "$container" "$tool" "$@"
   else
     echo "Nenhum container PHP em execução. Rodando '$tool' no host."
     command "$tool" "$@"
@@ -257,10 +257,10 @@ docker_node_tools() {
   local tool="$1"
   shift
   local container=$(docker ps --format '{{.Names}}' | grep '_node$' | head -n 1)
-  local folder_name=$(basename "$PWD")
+  local rel_path="${PWD#*/var/www/html}"
 
   if [ -n "$container" ]; then
-    docker exec -it -w "/var/www/html/$folder_name" "$container" "$tool" "$@"
+    docker exec -it -w "/var/www/html${rel_path}" "$container" "$tool" "$@"
   else
     echo "Nenhum container Node em execução. Rodando '$tool' no host."
     command "$tool" "$@"
