@@ -242,7 +242,7 @@ docker_php_tools() {
   local tool="$1"
   shift
   local container=$(docker ps --format '{{.Names}}' | grep '_php$' | head -n 1)
-  local rel_path="${PWD#*/var/www/html}"
+  local rel_path="${PWD#*/src}"
 
   if [ -n "$container" ]; then
     docker exec -it -w "/var/www/html${rel_path}" "$container" "$tool" "$@"
@@ -257,7 +257,7 @@ docker_node_tools() {
   local tool="$1"
   shift
   local container=$(docker ps --format '{{.Names}}' | grep '_node$' | head -n 1)
-  local rel_path="${PWD#*/var/www/html}"
+  local rel_path="${PWD#*/src}"
 
   if [ -n "$container" ]; then
     docker exec -it -w "/var/www/html${rel_path}" "$container" "$tool" "$@"
