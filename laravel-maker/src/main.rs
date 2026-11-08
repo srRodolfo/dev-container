@@ -51,7 +51,7 @@ const DEFAULT_SERVER_PORT: u16 = 8000;
 const DEFAULT_DB_PORT: u16 = 3306;
 const DEFAULT_DB_ROOT_PASSWORD: &str = "password";
 const VHOSTS_DIR: &str = "services/apache/vhosts";
-const DEFAULT_LARAVEL_VERSION: u8 = 12;
+const DEFAULT_LARAVEL_VERSION: u8 = 13;
 const MINIMAL_LARAVEL_VERSION: u8 = 10;
 
 #[derive(Debug)]
@@ -333,7 +333,7 @@ fn get_user_input() -> Result<ProjectInput, AppError> {
     let laravel_version = loop {
         println!("---");
         println!(
-            "Versões de Laravel Comuns: {} (LTS), 11 (Mínimo aceito: {})",
+            "Versões de Laravel Comuns: {} (LTS), 10 (Mínimo aceito: {})",
             DEFAULT_LARAVEL_VERSION, MINIMAL_LARAVEL_VERSION
         );
         print!(
